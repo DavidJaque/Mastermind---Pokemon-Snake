@@ -41,17 +41,17 @@ obstacle_definition = [list(row) for row in obstacle_definition.split("\n")]
 MAP_WIDTH = len(obstacle_definition[0])
 MAP_HEIGHT = len(obstacle_definition)
 
+# generate random objects
+
+while len(entrenadores_en_mapa) < 3:
+    new_position = [random.randint(0, MAP_WIDTH - 2), random.randint(0, MAP_HEIGHT - 2)]
+
+    if new_position not in entrenadores_en_mapa and new_position != mi_posicion:
+        entrenadores_en_mapa.append(new_position)
+
 #   Main Loop
 while not end_game:
     os.system("cls")
-    #generate random objects
-
-    while len(entrenadores_en_mapa) < cant_entrenadores:
-        new_position = [random.randint(0, MAP_WIDTH-1), random.randint(0, MAP_HEIGHT-1)]
-
-        if new_position not in entrenadores_en_mapa and new_position != mi_posicion and new_position not in entrenador_derrotado:
-            entrenadores_en_mapa.append(new_position)
-
 
     #   draw map
     print("+" + "-" * MAP_WIDTH * 3 + "+")
@@ -80,8 +80,10 @@ while not end_game:
                 char_to_draw = "@"
 
                 if object_in_cell:
+                    # activar combate pokemon contra entrenador
+                    # si gano el combate ahi recien se ejecuta la siguiente linea (lo elimino del mapa) *pendiente*
+                    # agregar elemento a la cola para comprobar a cuantos venci, el juego termina cuando la cola sea de tamano = cantidad de entrenadores inicial
                     entrenadores_en_mapa.remove(object_in_cell)
-                    tail_length +=1
 
                 if tail_in_cell:
                     end_game = True
