@@ -2,6 +2,9 @@ import os
 import random
 import readchar
 
+from Entrenador import Entrenador
+from Pokemon import Pokemon
+
 POS_X = 0
 POS_Y = 1
 cant_entrenadores = 3
@@ -22,6 +25,24 @@ obstacle_definition = """\
 #                  #
 ####################\
 """
+
+#crear pokemon
+pikachu = Pokemon("Pikachu", 260, "Surf, Rayo, Psicocarga, Onda Certera", "90,90,80,120")
+mimikyu = Pokemon("Mimikyu", 250, "Sombra Vil, Garra Umbria, Tajo Aereo, Cuchillada", "110,80,80,80")
+charizard = Pokemon("Charizard", 280, "Llamarada, Lanzallamas, Onda Certera, Pulson Dragon", "110,90,120,80")
+blastoise = Pokemon("Blastoise", 300, "Hidrobomba, Cabezazo, Terremoto, Megapatada", "100,80,100,80")
+venusaur = Pokemon("Venusaur", 320, "Derribo, Rayo Solar, Tormenta Solar, Bomba Lodo", "60,100,90,80")
+
+#   crear entrenadores
+nombre_jugador = input("Ingresa tu nombre: ")
+
+jugador = Entrenador(nombre_jugador, pikachu)   #   Este es el jugador
+
+ash = Entrenador("Ash", mimikyu)
+red = Entrenador("Red", charizard)
+blue = Entrenador("Blue", blastoise)
+green = Entrenador("Green", venusaur)
+
 
 
 
@@ -81,6 +102,8 @@ while not end_game:
 
                 if object_in_cell:
                     # activar combate pokemon contra entrenador
+
+
                     # si gano el combate ahi recien se ejecuta la siguiente linea (lo elimino del mapa) *pendiente*
                     # agregar elemento a la cola para comprobar a cuantos venci, el juego termina cuando la cola sea de tamano = cantidad de entrenadores inicial
                     entrenadores_en_mapa.remove(object_in_cell)
@@ -139,3 +162,5 @@ while not end_game:
 
 if died:
     print("HAS PERDIDO !")
+
+
