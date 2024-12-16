@@ -1,58 +1,54 @@
-from Pokemon import Pokemon
+
+def __init__(self, pokemon1, pokemon2):
+    self.pokemon1 = pokemon1
+    self.pokemon2 = pokemon2
 
 
-poke1 = Pokemon
-poke2 = Pokemon
+def iniciar(self):
+    print("\nComienza el combate!")
 
-def fin_combate(poke1, poke2):
+    input("Presiona Enter para comenzar...\n")
+
+    while not self.pokemon1.debilitado() and not self.pokemon2.debilitado():
+        #   COMBATEN
+        if self.turno(self.pokemon1, self.pokemon2):
+            return
+        if self.turno(self.pokemon2, self.pokemon1):
+            return
+
+
+def mostrar_vida(self):
+    self.pokemon1.barras_de_vida()
+    self.pokemon2.barras_de_vida()
+
+
+def turno(self, atacante, defensor):
+    print("Turno de " + atacante.getNombre())
+    atacante.mostrarAtaques()
+    dano = atacante.atacar()
+    defensor.recibir_dano(dano)
+
+    if defensor.debilitado():
+        self.fin_combate()
+        return True
+
+    self.mostrar_vida()
+    input("Enter para continuar...\n\n")
+    return False
+
+
+def fin_combate(self):
     print("Fin del combate")
-    if poke1.getVida > poke2.getVida:
-        print("Oh no!"+ poke2.getNombre() +  " se ha debilitado ( • ᴖ • ｡)")
-        print(poke1.getNombre + " ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")
+    if self.pokemon1.getVida() > self.pokemon2.getVida():
+        print("Oh no!"+ self.pokemon2.getNombre() +  " se ha debilitado ( • ᴖ • ｡)")
+        print(self.pokemon1.getNombre() + " ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")
     else:
-        print("Oh no!" + poke1.getNombre + " se ha debilitado ( • ᴖ • ｡)")
-        print(poke2.getNombre + " ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")
+        print("Oh no!" + self.pokemon1.getNombre() + " se ha debilitado ( • ᴖ • ｡)")
+        print(self.pokemon2.getNombre() + " ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")
 
 
-print("\nComienza el combate!")
 
 
-input("Presiona Enter para comenzar...\n")
-
-while not poke1.debilitado() and not poke2.debilitado():
-    #   COMBATEN
-
-    #   Turno de Pokemon 1
-    print("Turno de " + poke1.getNombre())
-
-    poke1.mostrarAtaques()
-    poke2.recibir_dano(poke2, poke1.atacar())
-
-    if poke2.debilitado():
-        fin_combate(poke1, poke2)
-        exit()
-
-    # mostrar barras de vida
-    poke1.barras_de_vida()
-    poke2.barras_de_vida()
-
-    input("Enter para continuar...\n\n")
-
-
-    #   Turno de Pokemon 2
-    print("Turno de " + poke2.getNombre())
-
-    poke2.mostrarAtaques()
-    poke1.recibir_dano(poke1, poke2.atacar())
-
-    if poke1.debilitado():
-        fin_combate(poke1, poke2)
-        exit()
-
-    poke1.barras_de_vida()
-    poke2.barras_de_vida()
-
-    input("Enter para continuar...\n\n")
 
 
 

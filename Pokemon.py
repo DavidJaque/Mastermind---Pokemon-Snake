@@ -6,8 +6,7 @@ class Pokemon:
         # Convertir ataques en una lista si no lo es ya
         self.ataques = ataques if isinstance(ataques, list) else ataques.split(",")
         self.vida_inicial = vida
-        self.potencia_ataques = potencia_ataques if isinstance(potencia_ataques, list) else potencia_ataques.split(",")
-
+        self.potencia_ataques = list(map(int, potencia_ataques.split(",")))
 
     def mostrarAtaques(self):
         print("¿Qué ataque deseas realizar?")
@@ -19,13 +18,14 @@ class Pokemon:
         eleccion = int(input("Ingresa el número del ataque: "))
         if 1 <= eleccion <= len(self.ataques):
             print(f"{self.nombre} usa {self.ataques[eleccion - 1].strip()}!")
-            return self.potencia_ataques[eleccion]
+            return self.potencia_ataques[eleccion - 1]
 
         else:
             print("Error: ataque no válido")
 
-    def recibir_dano(self, dano_Recibido):
-        self.vida -= dano_Recibido
+    def recibir_dano(self, dano):
+        self.vida -= dano
+        print(f"{self.nombre} recibió {dano} puntos de daño ")
 
     def barras_de_vida(self):
         # el 20 es por el largo de la barra de vida

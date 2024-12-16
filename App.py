@@ -2,6 +2,7 @@ import os
 import random
 import readchar
 
+import combate_Pokemon
 from Entrenador import Entrenador
 from Pokemon import Pokemon
 
@@ -42,9 +43,6 @@ ash = Entrenador("Ash", mimikyu)
 red = Entrenador("Red", charizard)
 blue = Entrenador("Blue", blastoise)
 green = Entrenador("Green", venusaur)
-
-
-
 
 mi_posicion = [6, 8]
 tail_length = 0
@@ -101,12 +99,19 @@ while not end_game:
                 char_to_draw = "@"
 
                 if object_in_cell:
-                    # activar combate pokemon contra entrenador
+                    print("Te encontraste con un entrenador!")
+                    oponente = random.choice([ash, red, blue, green])   # Selecciona entrenador al azar
+                    combate = combate_Pokemon.Combate(jugador.pokemon, oponente.pokemon)
+                    combate.iniciar()
 
-
-                    # si gano el combate ahi recien se ejecuta la siguiente linea (lo elimino del mapa) *pendiente*
-                    # agregar elemento a la cola para comprobar a cuantos venci, el juego termina cuando la cola sea de tamano = cantidad de entrenadores inicial
-                    entrenadores_en_mapa.remove(object_in_cell)
+                    if jugador.pokemon.getVida() > 0:
+                        print(f"Has derrotado a {oponente.nombre}!")
+                        tail_length += 1
+                        entrenador_derrotado.append(oponente)
+                        entrenadores_en_mapa.remove(oponente)
+                    else:
+                        print(f"Que pena! Has sido derrotado por {oponente.nombre}")
+                        end_game = True
 
                 if tail_in_cell:
                     end_game = True
