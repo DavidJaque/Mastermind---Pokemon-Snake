@@ -2,7 +2,7 @@ import os
 import random
 import readchar
 
-import combate_Pokemon
+from combate_Pokemon import Combate
 from Entrenador import Entrenador
 from Pokemon import Pokemon
 
@@ -43,6 +43,8 @@ ash = Entrenador("Ash", mimikyu)
 red = Entrenador("Red", charizard)
 blue = Entrenador("Blue", blastoise)
 green = Entrenador("Green", venusaur)
+
+#   crear combate
 
 mi_posicion = [6, 8]
 tail_length = 0
@@ -100,9 +102,10 @@ while not end_game:
 
                 if object_in_cell:
                     print("Te encontraste con un entrenador!")
-                    oponente = random.choice([ash, red, blue, green])   # Selecciona entrenador al azar
-                    combate = combate_Pokemon.Combate(jugador.pokemon, oponente.pokemon)
-                    combate.iniciar()
+                    oponente = random.choice([ash, red, blue, green])   #   Selecciona entrenador al azar
+
+                    combate = Combate(jugador.pokemon, oponente.pokemon)
+                    combate.iniciar(jugador.pokemon, oponente.pokemon)
 
                     if jugador.pokemon.getVida() > 0:
                         print(f"Has derrotado a {oponente.nombre}!")
@@ -119,7 +122,6 @@ while not end_game:
 
             if obstacle_definition[coordinate_y][coordinate_x] == "#":
                 char_to_draw = "#"
-
 
             print(" {} ".format(char_to_draw), end="")
         print("|")
