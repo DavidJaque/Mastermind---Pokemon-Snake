@@ -36,6 +36,6 @@ class Combate:
     def fin_combate(self, atacante, defensor):
         print("Fin del combate")
         if atacante.getVida() > defensor.getVida():
-            print(atacante.getNombre() + " ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")
+            print( atacante.getNombre() + " ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")
         else:
             print(defensor.getNombre() + " ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")

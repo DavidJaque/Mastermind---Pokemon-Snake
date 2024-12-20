@@ -124,13 +124,13 @@ while not end_game:
 
                     if jugador.pokemon.getVida() > 0:
                         print(f"Has derrotado a {oponente.nombre}!")
+                        char_to_draw = " "
                         tail_length += 1
                         entrenador_derrotado.append(oponente)
                         entrenadores.remove(oponente)
                         print("Curando a tu pokemon...")
                         atacante.vida = jugador.pokemon.vida_inicial
                         atacante.barras_de_vida()
-                        limpiar_consola()
                     else:
                         print(f"\nQue pena! Has sido derrotado por {oponente.nombre}")
                         died = True

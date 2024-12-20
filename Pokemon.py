@@ -10,8 +10,9 @@ class Pokemon:
 
     def mostrarAtaques(self):   #   pendiente mostrar la potencia de los ataques
         print("¿Qué ataque deseas realizar?")
-        for i, ataque in enumerate(self.ataques, start=1):
-            print(f"[{i}] - {ataque.strip()}")
+
+        for i in range(len(self.ataques)):
+            print(f"[{i+1}] - {self.ataques[i]} [{self.potencia_ataques[i]}]")
 
     def atacar(self):
         self.mostrarAtaques()
