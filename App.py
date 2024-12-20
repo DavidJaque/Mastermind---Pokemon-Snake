@@ -73,7 +73,7 @@ while len(entrenadores_en_mapa) < 3:
 
 #   Main Loop
 while not end_game:
-    #os.system("cls")
+    os.system("cls")
 
     #   draw map
     print("+" + "-" * MAP_WIDTH * 3 + "+")
@@ -103,8 +103,9 @@ while not end_game:
                 char_to_draw = "@"
 
                 if object_in_cell:
-                    print("Te encontraste con un entrenador!")
+                    os.system("cls")
                     oponente = random.choice([ash, red, blue, green])   #   Selecciona entrenador al azar
+                    print("\nTe encontraste con un entrenador!\n" + oponente.nombre + " te desafia y lanza a su " + oponente.pokemon.nombre)
 
                     atacante = jugador.pokemon
                     defensor = oponente.pokemon
