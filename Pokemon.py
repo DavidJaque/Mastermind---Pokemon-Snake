@@ -17,7 +17,7 @@ class Pokemon:
         self.mostrarAtaques()
         eleccion = int(input("Ingresa el número del ataque: "))
         if 1 <= eleccion <= len(self.ataques):
-            print(f"{self.nombre} usa {self.ataques[eleccion - 1].strip()}!")
+            print(f"\n{self.nombre} usa {self.ataques[eleccion - 1].strip()}!")
             return self.potencia_ataques[eleccion - 1]
 
         else:
@@ -31,7 +31,7 @@ class Pokemon:
         # el 20 es por el largo de la barra de vida
         # genera una barra de vida basada en la vida actual
         barras = int(self.vida * 20 / self.vida_inicial)
-        print(f"{self.nombre}")
+        print(f"\n{self.nombre}")
         print(f"PS:   [{'*' * barras}{' ' * (20 - barras)}] ({self.vida}/{self.vida_inicial})")
 
     def debilitado(self):

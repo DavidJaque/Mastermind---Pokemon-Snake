@@ -6,6 +6,16 @@ from combate_Pokemon import Combate
 from Entrenador import Entrenador
 from Pokemon import Pokemon
 
+
+# Detecta el sistema operativo y utiliza el comando adecuado
+def limpiar_consola():
+    if os.name == 'nt':  # Para Windows
+        os.system('cls')
+    else:  # Para macOS
+        os.system('clear')
+
+
+
 POS_X = 0
 POS_Y = 1
 cant_entrenadores = 3
@@ -73,8 +83,7 @@ while len(entrenadores_en_mapa) < 3:
 
 #   Main Loop
 while not end_game:
-    os.system("cls")
-
+    limpiar_consola()
     #   draw map
     print("+" + "-" * MAP_WIDTH * 3 + "+")
 
@@ -103,7 +112,7 @@ while not end_game:
                 char_to_draw = "@"
 
                 if object_in_cell:
-                    os.system("cls")
+                    limpiar_consola()
                     oponente = random.choice([ash, red, blue, green])   #   Selecciona entrenador al azar
                     print("\nTe encontraste con un entrenador!\n" + oponente.nombre + " te desafia y lanza a su " + oponente.pokemon.nombre)
 
@@ -121,7 +130,7 @@ while not end_game:
                         print("Curando a tu pokemon...")
                         atacante.vida = jugador.pokemon.vida_inicial
                         atacante.barras_de_vida()
-
+                        limpiar_consola()
                     else:
                         print(f"\nQue pena! Has sido derrotado por {oponente.nombre}")
                         died = True
@@ -176,7 +185,7 @@ while not end_game:
         end_game = True
         died = True
 
-    os.system("cls")
+    limpiar_consola()
 
 if died:
     print("HAS PERDIDO !")
