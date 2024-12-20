@@ -8,10 +8,10 @@ class Pokemon:
         self.vida_inicial = vida
         self.potencia_ataques = list(map(int, potencia_ataques.split(",")))
 
-    def mostrarAtaques(self):
+    def mostrarAtaques(self):   #   pendiente mostrar la potencia de los ataques
         print("¿Qué ataque deseas realizar?")
-        for i, ataque, potencia_ataque in enumerate(self.ataques, start=1):
-            print(f"[{i}] - {ataque.strip()} ({potencia_ataque.strip()})")
+        for i, ataque in enumerate(self.ataques, start=1):
+            print(f"[{i}] - {ataque.strip()}")
 
     def atacar(self):
         self.mostrarAtaques()

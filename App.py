@@ -50,6 +50,7 @@ mi_posicion = [6, 8]
 tail_length = 0
 tail = []
 entrenadores_en_mapa = []
+entrenadores = [ash, red, blue, green]
 entrenador_derrotado = []
 
 end_game = False
@@ -58,7 +59,6 @@ gana_combate = False
 
 #   create obstacle map
 obstacle_definition = [list(row) for row in obstacle_definition.split("\n")]
-
 MAP_WIDTH = len(obstacle_definition[0])
 MAP_HEIGHT = len(obstacle_definition)
 
@@ -67,12 +67,13 @@ MAP_HEIGHT = len(obstacle_definition)
 while len(entrenadores_en_mapa) < 3:
     new_position = [random.randint(0, MAP_WIDTH - 2), random.randint(0, MAP_HEIGHT - 2)]
 
-    if new_position not in entrenadores_en_mapa and new_position != mi_posicion:
+    #   validar que el objeto aparezca en una zona valida del mapa
+    if new_position not in entrenadores_en_mapa and new_position != mi_posicion and obstacle_definition[new_position[POS_Y]][new_position[POS_X]] != "#":
         entrenadores_en_mapa.append(new_position)
 
 #   Main Loop
 while not end_game:
-    os.system("cls")
+    #os.system("cls")
 
     #   draw map
     print("+" + "-" * MAP_WIDTH * 3 + "+")
@@ -88,8 +89,9 @@ while not end_game:
 
             for map_object in entrenadores_en_mapa:
                 if map_object[POS_X] == coordinate_x and map_object[POS_Y] == coordinate_y:
-                    char_to_draw = "*"
-                    object_in_cell = map_object
+                    if map_object[POS_X] != "#" and map_object[POS_Y] != "#":
+                        char_to_draw = "*"
+                        object_in_cell = map_object
 
 
             for tail_piece in tail:
@@ -104,16 +106,24 @@ while not end_game:
                     print("Te encontraste con un entrenador!")
                     oponente = random.choice([ash, red, blue, green])   #   Selecciona entrenador al azar
 
-                    combate = Combate(jugador.pokemon, oponente.pokemon)
-                    combate.iniciar(jugador.pokemon, oponente.pokemon)
+                    atacante = jugador.pokemon
+                    defensor = oponente.pokemon
+                    combate = Combate(atacante,defensor)
+
+                    combate.iniciar(atacante,defensor)
 
                     if jugador.pokemon.getVida() > 0:
                         print(f"Has derrotado a {oponente.nombre}!")
                         tail_length += 1
                         entrenador_derrotado.append(oponente)
-                        entrenadores_en_mapa.remove(oponente)
+                        entrenadores.remove(oponente)
+                        print("Curando a tu pokemon...")
+                        atacante.vida = jugador.pokemon.vida_inicial
+                        atacante.barras_de_vida()
+
                     else:
-                        print(f"Que pena! Has sido derrotado por {oponente.nombre}")
+                        print(f"\nQue pena! Has sido derrotado por {oponente.nombre}")
+                        died = True
                         end_game = True
 
                 if tail_in_cell:
