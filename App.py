@@ -1,5 +1,7 @@
 import os
 import random
+from unittest import skipIf
+
 import readchar
 
 from combate_Pokemon import Combate
@@ -14,11 +16,9 @@ def limpiar_consola():
     else:  # Para macOS
         os.system('clear')
 
-
-
 POS_X = 0
 POS_Y = 1
-cant_entrenadores = 3
+cant_entrenadores = 4
 
 obstacle_definition = """\
 ####################
@@ -55,7 +55,6 @@ blue = Entrenador("Blue", blastoise)
 green = Entrenador("Green", venusaur)
 
 #   crear combate
-
 mi_posicion = [6, 8]
 tail_length = 0
 tail = []
@@ -74,21 +73,31 @@ MAP_HEIGHT = len(obstacle_definition)
 
 # generate random objects
 
-while len(entrenadores_en_mapa) < 3:
+while len(entrenadores_en_mapa) < 4:
     new_position = [random.randint(0, MAP_WIDTH - 2), random.randint(0, MAP_HEIGHT - 2)]
 
     #   validar que el objeto aparezca en una zona valida del mapa
     if new_position not in entrenadores_en_mapa and new_position != mi_posicion and obstacle_definition[new_position[POS_Y]][new_position[POS_X]] != "#":
         entrenadores_en_mapa.append(new_position)
 
+#entregar isntrucciones al jugador
+print(f"\nBienvenido al juego Snake-Pokemon, {jugador.nombre} \n")
+print(f"Te daré las intrucciones generales, puedes usar [W, A, S, D] para moverte\n"
+      f"Si quieres terminar el juego presiona [Q]")
+print("Si tocas alguna pared [#] pierdes, si te tocas la cola, pierdes. Si tu pokemon se debilita, pierdes.")
+print("El juego termina cuando vences a todos los entrenadores del mapa [*]")
+
+input("\nPresiona <enter> cuando estés listo para comenzar =)")
+
 #   Main Loop
 while not end_game:
+    limpiar = False
     limpiar_consola()
     #   draw map
     print("+" + "-" * MAP_WIDTH * 3 + "+")
 
     for coordinate_y in range(MAP_HEIGHT):
-        print("|", end="")
+        print("|", end = "")
 
         for coordinate_x in range(MAP_WIDTH):
 
@@ -102,7 +111,6 @@ while not end_game:
                         char_to_draw = "*"
                         object_in_cell = map_object
 
-
             for tail_piece in tail:
                 if tail_piece[POS_X] == coordinate_x and tail_piece[POS_Y] == coordinate_y:
                     char_to_draw = "@"
@@ -112,45 +120,45 @@ while not end_game:
                 char_to_draw = "@"
 
                 if object_in_cell:
+                    oponente = random.choice(entrenadores)   #   Selecciona entrenador al azar
                     limpiar_consola()
-                    oponente = random.choice([ash, red, blue, green])   #   Selecciona entrenador al azar
                     print("\nTe encontraste con un entrenador!\n" + oponente.nombre + " te desafia y lanza a su " + oponente.pokemon.nombre)
 
                     atacante = jugador.pokemon
                     defensor = oponente.pokemon
-                    combate = Combate(atacante,defensor)
+                    combate = Combate(atacante, defensor)
 
-                    combate.iniciar(atacante,defensor)
+                    combate.iniciar(atacante, defensor)
 
                     if jugador.pokemon.getVida() > 0:
-                        print(f"Has derrotado a {oponente.nombre}!")
+                        print(f"\nHas derrotado a {oponente.nombre}!")
                         char_to_draw = " "
                         tail_length += 1
                         entrenador_derrotado.append(oponente)
                         entrenadores.remove(oponente)
-                        print("Curando a tu pokemon...")
+                        entrenadores_en_mapa.remove(object_in_cell) #   esto elimina al objeto * una vez derrotado el entrenador
+                        print("\nCurando a tu pokemon...")
                         atacante.vida = jugador.pokemon.vida_inicial
                         atacante.barras_de_vida()
+
+                        input("\nEnter para continuar...\n")
+                        limpiar = True
+
                     else:
                         print(f"\nQue pena! Has sido derrotado por {oponente.nombre}")
                         died = True
                         end_game = True
 
-                if tail_in_cell:
-                    end_game = True
-                    died = True
-
             if obstacle_definition[coordinate_y][coordinate_x] == "#":
                 char_to_draw = "#"
 
-            print(" {} ".format(char_to_draw), end="")
-        print("|")
+            if limpiar == False:
+                print(" {} ".format(char_to_draw), end = "")
+        if limpiar == False: print("|")
 
-    print("+" + "-" * MAP_WIDTH * 3 + "+")
-
+    if limpiar == False: print("+" + "-" * MAP_WIDTH * 3 + "+")
 
     #   Ask user where he wants to move
-    #   direction = input("q dirección tomar? [W/A/S/D]: ")
     direction = readchar.readchar()
 
     if direction == "w":
@@ -180,6 +188,12 @@ while not end_game:
     elif direction == "q":
         end_game = True
 
+    # Verificar si el jugador se toca la cola
+    if mi_posicion in tail:
+        print("\n¡Te tocaste la cola!")
+        died = True
+        end_game = True
+
     #   Check if the snake hits an obstacle
     if obstacle_definition[mi_posicion[POS_Y]][mi_posicion[POS_X]] == "#":
         end_game = True
@@ -187,7 +201,14 @@ while not end_game:
 
     limpiar_consola()
 
+    if len(entrenadores) == 0 or entrenadores_en_mapa == 0:
+        limpiar_consola()
+        print(f"\nFelicidades, {jugador.nombre}. Derrotaste a todos los entrenadores!")
+        print("¡HAS GANADO!")
+        end_game = True
+        break
+
 if died:
-    print("HAS PERDIDO !")
+    print("¡QUE PENA! ¡HAS PERDIDO!")
 
 

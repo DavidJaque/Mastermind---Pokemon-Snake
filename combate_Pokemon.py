@@ -20,22 +20,22 @@ class Combate:
         defensor.barras_de_vida()
 
     def turno(self, atacante, defensor):
-        print("Turno de " + atacante.getNombre())
+        print(f"Turno de {atacante.getNombre()}\n")
         dano = atacante.atacar()
         defensor.recibir_dano(dano)
 
         if defensor.debilitado():
-            print("Oh no! " + defensor.getNombre() + " se ha debilitado ( • ᴖ • ｡)")
+            print("\nOh no! " + defensor.getNombre() + " se ha debilitado ( • ᴖ • ｡)")
             self.fin_combate(atacante, defensor)
             return True
 
         self.mostrar_vida(atacante, defensor)
-        input("Enter para continuar...\n\n")
+        input("\nEnter para continuar...\n")
         return False
 
     def fin_combate(self, atacante, defensor):
         print("Fin del combate")
         if atacante.getVida() > defensor.getVida():
-            print( atacante.getNombre() + " ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")
+            print(f"\n{atacante.getNombre()} ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")
         else:
-            print(defensor.getNombre() + " ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")
+            print(f"\n{defensor.getNombre()} ha ganado! ૮ ˶ᵔ ᵕ ᵔ˶ ა")

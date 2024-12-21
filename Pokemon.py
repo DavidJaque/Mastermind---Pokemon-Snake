@@ -1,3 +1,5 @@
+import random
+
 
 class Pokemon:
     def __init__(self, nombre, vida, ataques, potencia_ataques):
@@ -9,20 +11,27 @@ class Pokemon:
         self.potencia_ataques = list(map(int, potencia_ataques.split(",")))
 
     def mostrarAtaques(self):   #   pendiente mostrar la potencia de los ataques
-        print("¿Qué ataque deseas realizar?")
+        if self.nombre == "Pikachu":
+            print("¿Qué ataque deseas realizar?")
 
         for i in range(len(self.ataques)):
             print(f"[{i+1}] - {self.ataques[i]} [{self.potencia_ataques[i]}]")
 
     def atacar(self):
         self.mostrarAtaques()
-        eleccion = int(input("Ingresa el número del ataque: "))
-        if 1 <= eleccion <= len(self.ataques):
-            print(f"\n{self.nombre} usa {self.ataques[eleccion - 1].strip()}!")
-            return self.potencia_ataques[eleccion - 1]
+        if self.nombre == "Pikachu":
+            eleccion = int(input("Ingresa el número del ataque: "))
+            if 1 <= eleccion <= len(self.ataques):
+                print(f"\n{self.nombre} usa {self.ataques[eleccion - 1].strip()}!")
+                return self.potencia_ataques[eleccion - 1]
 
+            else:
+                print("Error: ataque no válido")
         else:
-            print("Error: ataque no válido")
+            lista = [1,2,3,4]
+            eleccion = random.choice(lista)
+            print(f"\n{self.nombre} usa {self.ataques[eleccion - 1]}!")
+            return self.potencia_ataques[eleccion - 1]
 
     def recibir_dano(self, dano):
         self.vida -= dano
